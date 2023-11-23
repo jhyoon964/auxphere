@@ -1,24 +1,41 @@
-import subprocess
-from pathlib import Path
+from collections import namedtuple
 
-from .version import __version__
+import numpy as np
+import torch
 
-__all__ = [
-    '__version__'
-]
+from .detectors import build_detector
 
 
-def get_git_commit_number():
-    if not (Path(__file__).parent / '../.git').exists():
-        return '0000000'
-
-    cmd_out = subprocess.run(['git', 'rev-parse', 'HEAD'], stdout=subprocess.PIPE)
-    git_commit_number = cmd_out.stdout.decode('utf-8')[:7]
-    return git_commit_number
+def build_network(model_cfg, num_class, dataset, logger):
+    model = build_detector(
+        model_cfg=model_cfg, num_class=num_class, dataset=dataset, logger=logger
+    )
+    return model
 
 
-script_version = get_git_commit_number()
+def load_data_to_gpu(batch_dict):
+    for key, val in batch_dict.items():
+        if not isinstance(val, np.ndarray):
+            continue
+        elif key in ['frame_id', 'metadata', 'calib', 'image_shape', 'image_pad_shape', 'image_rescale_shape']:
+            continue
+        else:
+            batch_dict[key] = torch.from_numpy(val).float().cuda()
 
 
-if script_version not in __version__:
-    __version__ = __version__ + '+py%s' % script_version
+def model_fn_decorator():
+    ModelReturn = namedtuple('ModelReturn', ['loss', 'tb_dict', 'disp_dict'])
+
+    def model_func(model, batch_dict, **kwargs):
+        load_data_to_gpu(batch_dict)
+        ret_dict, tb_dict, disp_dict = model(batch_dict)
+
+        loss = ret_dict['loss'].mean()
+        if hasattr(model, 'update_global_step'):
+            model.update_global_step()
+        else:
+            model.module.update_global_step()
+
+        return ModelReturn(loss, tb_dict, disp_dict)
+
+    return model_func
