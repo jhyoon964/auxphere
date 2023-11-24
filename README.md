@@ -4,7 +4,7 @@
 
 ![fig2_1](https://github.com/jhyoon964/auxphere/assets/144157648/269b3bcd-67e1-4af6-bd1f-eddff354665e)
 
-
+pretrained model - [auxphere](https://drive.google.com/file/d/1-x35lRGjp5n0-IIVFWDLalYT6nQXirMh/view?usp=sharing)
 ## Training & Testing
 ```
 # Train
