@@ -8,7 +8,7 @@
 ## Training & Testing
 ```
 # Train
-python train.py
+bash scripts/dist_train.sh
 
 # Test
-python val.py
+bash scripts/dist_test.sh
