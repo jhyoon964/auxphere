@@ -1,6 +1,7 @@
 # 3D object detection
 
-![fig2_1](https://github.com/jhyoon964/auxphere/assets/144157648/269b3bcd-67e1-4af6-bd1f-eddff354665e)
+![Fig2 (8)](https://github.com/user-attachments/assets/2ad2e19a-340d-4835-8c91-477a26a2082b)
+
 
 pretrained model - [auxphere](https://drive.google.com/file/d/1EhKkVmRDsRobxodYBijvgfNCETBf80vA/view?usp=sharing)
 ## Training & Testing
