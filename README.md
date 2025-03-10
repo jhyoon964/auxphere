@@ -8,8 +8,11 @@
 pretrained model - [auxphere](https://drive.google.com/file/d/1EhKkVmRDsRobxodYBijvgfNCETBf80vA/view?usp=sharing)
 
 Public dataset links
+
 KITTI dataset - https://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d
+
 CADC dataset - http://cadcd.uwaterloo.ca/
+
 Dense dataset - https://www.uni-ulm.de/in/mrm/forschung/datensaetze-1/dense-datasets/
 
 ## Training & Testing
